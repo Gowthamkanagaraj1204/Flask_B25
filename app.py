@@ -5,8 +5,8 @@ conn = sqlite3.connect("newdata.db",check_same_thread= False)
 
 app = Flask(__name__)
 
-cur = conn.cursor()
-
+cur = conn.cursor() 
+   
 cur.execute("""CREATE TABLE IF NOT EXISTS TAB(
 id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT NOT NULL,
 password TEXT NOT NULL)""")
@@ -42,7 +42,7 @@ def update(id):
         new_name = request.form["name"]
         new_psw = request.form["password"]
 
-        cur.execute("UPDATE TAB SET name = ?, password = ? WHERE id = ?",
+        cur.execute("UPDATE TAB SET name = ?,password = ? WHERE id = ?",
             (new_name, new_psw, id))
         conn.commit()
 
@@ -55,14 +55,13 @@ def update(id):
  
 @app.route("/delete/<id>")
 def delete(id):
-
+       
     cur.execute("DELETE FROM TAB WHERE id = ?",(id,))
 
     conn.commit()
 
     return redirect("/view")
+ 
 
-
-
-if __name__=="__main__": 
-    app.run(debug = True,port=5002)  
+if __name__=="__main__":
+    app.run(debug = True,port=5002)
